@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>UMANG DIGITAL SERVICE</title>
+
+  <meta name="description" content="UMANG DIGITAL SERVICE - Digital Services at Your Fingertips">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #06140d;
+      color: #ffffff;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* NAVBAR */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(3, 15, 9, 0.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(74, 222, 128, 0.15);
+    }
+
+    .navbar {
+      max-width: 1200px;
+      margin: auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 21px;
+      font-weight: 800;
+      color: #4ade80;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: #d1fae5;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #4ade80;
+    }
+
+    .login-btn {
+      border: 1px solid #4ade80;
+      padding: 9px 17px;
+      border-radius: 8px;
+      color: #4ade80 !important;
+    }
+
+    .register-btn {
+      background: #4ade80;
+      color: #03150a !important;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+
+    /* HERO */
+
+    .hero {
+      min-height: 650px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(
+          90deg,
+          rgba(2, 18, 10, 0.97),
+          rgba(2, 18, 10, 0.72),
+          rgba(2, 18, 10, 0.4)
+        ),
+        radial-gradient(circle at 80% 35%, rgba(34, 197, 94, 0.22), transparent 35%);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: rgba(74, 222, 128, 0.08);
+      border-radius: 50%;
+      right: -180px;
+      top: 60px;
+      filter: blur(10px);
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      width: 100%;
+      margin: auto;
+      padding: 70px 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border: 1px solid rgba(74, 222, 128, 0.3);
+      background: rgba(74, 222, 128, 0.08);
+      color: #86efac;
+      border-radius: 30px;
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      max-width: 750px;
+      font-size: clamp(42px, 7vw, 76px);
+      line-height: 1.05;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 span {
+      color: #4ade80;
+    }
+
+    .hero p {
+      max-width: 650px;
+      color: #b7c9be;
+      font-size: 18px;
+      margin-bottom: 32px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .primary-btn {
+      display: inline-block;
+      background: #4ade80;
+      color: #03150a;
+      padding: 14px 24px;
+      border-radius: 9px;
+      font-weight: 800;
+      transition: 0.3s;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(74, 222, 128, 0.18);
+    }
+
+    .secondary-btn {
+      display: inline-block;
+      padding: 13px 24px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 9px;
+      color: white;
+      transition: 0.3s;
+    }
+
+    .secondary-btn:hover {
+      border-color: #4ade80;
+      color: #4ade80;
+    }
+
+    /* SECTIONS */
+
+    section {
+      padding: 85px 24px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+
+    .section-title h2 {
+      font-size: 38px;
+      margin-bottom: 10px;
+    }
+
+    .section-title p {
+      color: #9fb2a5;
+    }
+
+    /* SERVICES */
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .service-card {
+      background: #0a2115;
+      border: 1px solid rgba(74, 222, 128, 0.12);
+      border-radius: 15px;
+      padding: 25px;
+      transition: 0.3s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(74, 222, 128, 0.45);
+    }
+
+    .service-icon {
+      font-size: 30px;
+      margin-bottom: 15px;
+    }
+
+    .service-card h3 {
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    .service-card p {
+      color: #91a69a;
+      font-size: 14px;
+    }
+
+    /* PLANS */
+
+    .plans {
+      background: #071b10;
+    }
+
+    .plan-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .plan-card {
+      background: #0a2115;
+      border: 1px solid rgba(74, 222, 128, 0.14);
+      border-radius: 17px;
+      padding: 32px;
+      text-align: center;
+    }
+
+    .plan-card.featured {
+      border-color: #4ade80;
+      box-shadow: 0 0 35px rgba(74, 222, 128, 0.08);
+    }
+
+    .plan-card h3 {
+      color: #86efac;
+      margin-bottom: 12px;
+    }
+
+    .price {
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .plan-card ul {
+      list-style: none;
+      color: #b0c2b6;
+      margin-bottom: 25px;
+    }
+
+    .plan-card li {
+      margin: 9px 0;
+    }
+
+    /* HOW IT WORKS */
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .step {
+      text-align: center;
+      padding: 25px;
+    }
+
+    .step-number {
+      width: 50px;
+      height: 50px;
+      margin: auto auto 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #4ade80;
+      color: #03150a;
+      font-weight: 900;
+    }
+
+    .step p {
+      color: #91a69a;
+      font-size: 14px;
+    }
+
+    /* ABOUT */
+
+    .about {
+      background: #06140d;
+    }
+
+    .about-box {
+      max-width: 850px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .about-box p {
+      color: #a9baaf;
+      font-size: 17px;
+    }
+
+    /* CONTACT */
+
+    .contact-box {
+      max-width: 700px;
+      margin: auto;
+      text-align: center;
+      background: #0a2115;
+      padding: 40px;
+      border-radius: 18px;
+      border: 1px solid rgba(74, 222, 128, 0.14);
+    }
+
+    .contact-box p {
+      color: #a9baaf;
+      margin: 8px 0;
+    }
+
+    /* FOOTER */
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 28px 20px;
+      text-align: center;
+      color: #718477;
+      font-size: 13px;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 900px) {
+      .nav-links {
+        display: none;
+      }
+
+      .service-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .steps {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .hero {
+        min-height: 580px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      section {
+        padding: 65px 18px;
+      }
+
+      .navbar {
+        padding: 14px 18px;
+      }
+
+      .hero-content {
+        padding: 60px 18px;
+      }
+
+      .hero h1 {
+        font-size: 44px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .service-grid,
+      .plan-grid,
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .section-title h2 {
+        font-size: 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+
+  <header>
+    <nav class="navbar">
+
+      <a href="#" class="logo">
+        UMANG DIGITAL SERVICE
+      </a>
+
+      <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#plans">Plans</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="login.html" class="login-btn">Login</a>
+        <a href="register.html" class="register-btn">Register</a>
+      </div>
+
+    </nav>
+  </header>
+
+
+  <!-- HERO -->
+
+  <main>
+
+    <section class="hero" id="home">
+
+      <div class="hero-content">
+
+        <div class="badge">
+          🌿 Digital Services • Simple • Secure
+        </div>
+
+        <h1>
+          Digital Services
+          <span>at Your Fingertips.</span>
+        </h1>
+
+        <p>
+          Welcome to UMANG DIGITAL SERVICE — your digital assistance
+          portal for online forms, certificates, documents, printing
+          and other useful services.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="register.html" class="primary-btn">
+            Register Now →
+          </a>
+
+          <a href="#services" class="secondary-btn">
+            Explore Services
+          </a>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- SERVICES -->
+
+    <section id="services">
+
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Our Services</h2>
+          <p>
+            Useful digital and cyber cafe services in one place.
+          </p>
+        </div>
+
+        <div class="service-grid">
+
+          <div class="service-card">
+            <div class="service-icon">🏛️</div>
+            <h3>Government Services</h3>
+            <p>
+              Certificates, applications and government portal assistance.
+            </p>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon">🪪</div>
+            <h3>ID Card Services</h3>
+            <p>
+              PAN, Voter ID, Ayushman, e-Shram and other ID assistance.
+            </p>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon">📄</div>
+            <h3>Online Forms</h3>
+            <p>
+              Job, scholarship, admission, exam and online applications.
+            </p>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon">🖨️</div>
+            <h3>Print & Documents</h3>
+            <p>
+              Printing, scanning, photocopy, lamination and document work.
+            </p>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon">💻</div>
+            <h3>Digital Services</h3>
+            <p>
+              PDF, photo, signature, document upload and download assistance.
+            </p>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon">🚆</div>
+            <h3>Travel Services</h3>
+            <p>
+              Train, flight and other travel booking assistance.
+            </p>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon">🏦</div>
+            <h3>Banking Services</h3>
+            <p>
+              Authorized banking and digital financial service assistance.
+            </p>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon">🧾</div>
+            <h3>Business Services</h3>
+            <p>
+              Resume, biodata, applications and business document services.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- PLANS -->
+
+    <section class="plans" id="plans">
+
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Choose Your Plan</h2>
+          <p>
+            Select an account type and get started.
+          </p>
+        </div>
+
+        <div class="plan-grid">
+
+          <div class="plan-card">
+
+            <h3>RETAILER</h3>
+
+            <div class="price">
+              ₹50
+            </div>
+
+            <ul>
+              <li>✓ Retailer Account</li>
+              <li>✓ Digital Services</li>
+              <li>✓ User Dashboard</li>
+              <li>✓ Service Requests</li>
+            </ul>
+
+            <a href="register.html" class="primary-btn">
+              Register
+            </a>
+
+          </div>
+
+
+          <div class="plan-card featured">
+
+            <h3>DISTRIBUTOR</h3>
+
+            <div class="price">
+              ₹150
+            </div>
+
+            <ul>
+              <li>✓ Distributor Account</li>
+              <li>✓ Digital Services</li>
+              <li>✓ User Dashboard</li>
+              <li>✓ Service Management</li>
+            </ul>
+
+            <a href="register.html" class="primary-btn">
+              Register
+            </a>
+
+          </div>
+
+
+          <div class="plan-card">
+
+            <h3>SUPER DISTRIBUTOR</h3>
+
+            <div class="price">
+              ₹400
+            </div>
+
+            <ul>
+              <li>✓ Super Distributor</li>
+              <li>✓ Digital Services</li>
+              <li>✓ User Dashboard</li>
+              <li>✓ Advanced Management</li>
+            </ul>
+
+            <a href="register.html" class="primary-btn">
+              Register
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- HOW IT WORKS -->
+
+    <section>
+
+      <div class="container">
+
+        <div class="section-title">
+          <h2>How It Works</h2>
+          <p>Simple steps to get started.</p>
+        </div>
+
+        <div class="steps">
+
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Register</h3>
+            <p>Create your account and choose your plan.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Pay</h3>
+            <p>Pay using the available UPI payment method.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Verification</h3>
+            <p>Your payment and registration are verified.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">4</div>
+            <h3>Get Started</h3>
+            <p>Login and access available services.</p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ABOUT -->
+
+    <section class="about" id="about">
+
+      <div class="container">
+
+        <div class="about-box">
+
+          <div class="section-title">
+            <h2>About UMANG DIGITAL SERVICE</h2>
+          </div>
+
+          <p>
+            UMANG DIGITAL SERVICE is designed to bring useful digital
+            services, online applications and cyber cafe assistance
+            together in one simple platform.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- CONTACT -->
+
+    <section id="contact">
+
+      <div class="container">
+
+        <div class="contact-box">
+
+          <div class="section-title">
+            <h2>Contact Us</h2>
+            <p>Need help? Get in touch with us.</p>
+          </div>
+
+          <p>📱 Mobile: Coming Soon</p>
+          <p>📧 Email: Coming Soon</p>
+          <p>📍 Bihar, India</p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    © 2026 UMANG DIGITAL SERVICE.
+    All Rights Reserved.
+
+  </footer>
+
+</body>
+</html>
