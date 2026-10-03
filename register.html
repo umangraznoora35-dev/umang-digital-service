@@ -1,0 +1,537 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - UMANG DIGITAL SERVICE</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #07111f;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #0d1b2a;
+      border-bottom: 1px solid #26384d;
+      padding: 18px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      color: #4ade80;
+      font-size: 21px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    nav a {
+      color: #dbeafe;
+      text-decoration: none;
+      margin-left: 16px;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: #4ade80;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 900px;
+      margin: 45px auto;
+    }
+
+    .title {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .title h1 {
+      font-size: 34px;
+      margin-bottom: 10px;
+    }
+
+    .title p {
+      color: #9fb0c3;
+    }
+
+    .card {
+      background: #0d1b2a;
+      border: 1px solid #26384d;
+      border-radius: 18px;
+      padding: 30px;
+      margin-bottom: 25px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.2);
+    }
+
+    .card h2 {
+      margin-bottom: 20px;
+      color: #4ade80;
+    }
+
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .plan {
+      border: 1px solid #34495e;
+      border-radius: 14px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .plan:hover {
+      border-color: #4ade80;
+      transform: translateY(-2px);
+    }
+
+    .plan.selected {
+      border: 2px solid #4ade80;
+      background: #10251b;
+    }
+
+    .plan h3 {
+      margin-bottom: 12px;
+    }
+
+    .price {
+      color: #4ade80;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .plan p {
+      color: #9fb0c3;
+      font-size: 13px;
+      margin-top: 8px;
+    }
+
+    label {
+      display: block;
+      margin: 16px 0 7px;
+      color: #dbeafe;
+      font-size: 14px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 13px;
+      border-radius: 9px;
+      border: 1px solid #34495e;
+      background: #07111f;
+      color: white;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #4ade80;
+    }
+
+    .payment {
+      background: #07111f;
+      border: 1px dashed #4ade80;
+      padding: 22px;
+      border-radius: 12px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .payment p {
+      color: #cbd5e1;
+      margin: 8px 0;
+    }
+
+    .upi {
+      color: #4ade80;
+      font-size: 18px;
+      font-weight: bold;
+      word-break: break-all;
+    }
+
+    .qr-box {
+      background: white;
+      width: 270px;
+      max-width: 100%;
+      margin: 20px auto;
+      padding: 12px;
+      border-radius: 15px;
+    }
+
+    .qr-box img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .qr-title {
+      color: #07111f;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .amount {
+      color: #4ade80;
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    .notice {
+      background: #10251b;
+      border-left: 4px solid #4ade80;
+      padding: 14px;
+      margin-top: 15px;
+      border-radius: 7px;
+      color: #cbd5e1;
+      font-size: 13px;
+      text-align: left;
+    }
+
+    .btn {
+      width: 100%;
+      margin-top: 25px;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      background: #4ade80;
+      color: #06100a;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #22c55e;
+    }
+
+    .success {
+      display: none;
+      background: #10251b;
+      border: 1px solid #4ade80;
+      color: #bbf7d0;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    footer {
+      text-align: center;
+      color: #718096;
+      padding: 30px;
+      font-size: 13px;
+    }
+
+    @media (max-width: 700px) {
+      header {
+        padding: 15px 5%;
+      }
+
+      nav a {
+        margin-left: 7px;
+        font-size: 12px;
+      }
+
+      .plans {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        padding: 20px;
+      }
+
+      .title h1 {
+        font-size: 27px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a href="index.html" class="logo">UMANG DIGITAL SERVICE</a>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="index.html#services">Services</a>
+    <a href="index.html#plans">Plans</a>
+    <a href="login.html">Login</a>
+  </nav>
+</header>
+
+<main class="container">
+
+  <div class="title">
+    <h1>Create Your Account</h1>
+    <p>Choose your plan and complete your registration.</p>
+  </div>
+
+  <!-- PLAN -->
+  <div class="card">
+    <h2>1. Choose Your Plan</h2>
+
+    <div class="plans">
+
+      <div class="plan" onclick="selectPlan('Retailer', 50, this)">
+        <h3>RETAILER</h3>
+        <div class="price">₹50</div>
+        <p>Retailer Account</p>
+      </div>
+
+      <div class="plan" onclick="selectPlan('Distributor', 150, this)">
+        <h3>DISTRIBUTOR</h3>
+        <div class="price">₹150</div>
+        <p>Distributor Account</p>
+      </div>
+
+      <div class="plan" onclick="selectPlan('Super Distributor', 400, this)">
+        <h3>SUPER DISTRIBUTOR</h3>
+        <div class="price">₹400</div>
+        <p>Advanced Account</p>
+      </div>
+
+    </div>
+
+    <input type="hidden" id="selectedPlan">
+    <input type="hidden" id="selectedAmount">
+  </div>
+
+
+  <!-- DETAILS -->
+  <div class="card">
+
+    <h2>2. Registration Details</h2>
+
+    <form id="registrationForm">
+
+      <label>Full Name *</label>
+      <input
+        type="text"
+        id="name"
+        placeholder="Enter your full name"
+        required
+      >
+
+      <label>Mobile Number *</label>
+      <input
+        type="tel"
+        id="mobile"
+        placeholder="10-digit mobile number"
+        maxlength="10"
+        required
+      >
+
+      <label>Email Address</label>
+      <input
+        type="email"
+        id="email"
+        placeholder="Enter your email"
+      >
+
+      <label>State *</label>
+      <select id="state" required>
+        <option value="">Select State</option>
+        <option>Bihar</option>
+        <option>Jharkhand</option>
+        <option>Uttar Pradesh</option>
+        <option>West Bengal</option>
+        <option>Other</option>
+      </select>
+
+      <label>District *</label>
+      <input
+        type="text"
+        id="district"
+        placeholder="Enter your district"
+        required
+      >
+
+      <label>Address</label>
+      <input
+        type="text"
+        id="address"
+        placeholder="Enter your address"
+      >
+
+  </div>
+
+
+  <!-- PAYMENT -->
+  <div class="card">
+
+    <h2>3. Pay Registration Fee</h2>
+
+    <div class="payment">
+
+      <p>Selected Plan</p>
+      <p class="upi" id="displayPlan">Please select a plan</p>
+
+      <p>Amount</p>
+      <p class="amount" id="displayAmount">₹0</p>
+
+      <!-- QR CODE -->
+      <div class="qr-box">
+
+        <div class="qr-title">
+          Scan & Pay with UPI
+        </div>
+
+        <img
+          id="qrCode"
+          src="https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=upi%3A%2F%2Fpay%3Fpa%3D8969228403-1%40okbizaxis%26pn%3DUMANG%20DIGITAL%20SERVICE"
+          alt="UPI Payment QR Code"
+        >
+
+      </div>
+
+      <p>UPI ID</p>
+      <p class="upi">8969228403-1@okbizaxis</p>
+
+      <div class="notice">
+        <strong>Payment instructions:</strong><br><br>
+        1. Apne selected plan ko check karein.<br>
+        2. QR code scan karke payment karein.<br>
+        3. Payment complete hone ke baad UTR / Transaction ID neeche enter karein.<br>
+        4. Registration administrator verification ke baad process hoga.
+      </div>
+
+      <label>UTR / Transaction ID *</label>
+
+      <input
+        type="text"
+        id="utr"
+        placeholder="Enter payment UTR / Transaction ID"
+        required
+      >
+
+    </div>
+
+    <button type="submit" class="btn">
+      Submit Registration
+    </button>
+
+    </form>
+
+    <div class="success" id="successMessage">
+      ✅ Registration details received.<br><br>
+      Your application will be verified by the administrator.
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  © 2026 UMANG DIGITAL SERVICE. All Rights Reserved.
+</footer>
+
+
+<script>
+
+  let selectedPlan = "";
+  let selectedAmount = 0;
+
+  const upiId = "8969228403-1@okbizaxis";
+  const businessName = "UMANG DIGITAL SERVICE";
+
+
+  function selectPlan(plan, amount, element) {
+
+    selectedPlan = plan;
+    selectedAmount = amount;
+
+    document.getElementById("selectedPlan").value = plan;
+    document.getElementById("selectedAmount").value = amount;
+
+    document.getElementById("displayPlan").textContent = plan;
+    document.getElementById("displayAmount").textContent = "₹" + amount;
+
+    document.querySelectorAll(".plan").forEach(function(card) {
+      card.classList.remove("selected");
+    });
+
+    element.classList.add("selected");
+
+    /*
+      UPI QR:
+      Selected plan + amount automatically QR me set hoga.
+    */
+
+    const upiLink =
+      "upi://pay" +
+      "?pa=" + encodeURIComponent(upiId) +
+      "&pn=" + encodeURIComponent(businessName) +
+      "&am=" + encodeURIComponent(amount) +
+      "&cu=INR" +
+      "&tn=" + encodeURIComponent(plan + " Registration");
+
+    const qrUrl =
+      "https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=" +
+      encodeURIComponent(upiLink);
+
+    document.getElementById("qrCode").src = qrUrl;
+  }
+
+
+  document
+    .getElementById("registrationForm")
+    .addEventListener("submit", function(e) {
+
+      e.preventDefault();
+
+      if (!selectedPlan) {
+        alert("Please select a plan first.");
+        return;
+      }
+
+      const mobile =
+        document.getElementById("mobile").value.trim();
+
+      if (!/^[0-9]{10}$/.test(mobile)) {
+        alert("Please enter a valid 10-digit mobile number.");
+        return;
+      }
+
+      const utr =
+        document.getElementById("utr").value.trim();
+
+      if (!utr) {
+        alert("Please enter your payment UTR / Transaction ID.");
+        return;
+      }
+
+      document.getElementById("successMessage").style.display = "block";
+
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth"
+      });
+
+    });
+
+</script>
+
+</body>
+</html>
+```
