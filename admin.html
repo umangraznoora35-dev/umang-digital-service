@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UMANG DIGITAL SERVICE - Admin</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #07111f;
+      color: #fff;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    h1 {
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: #aab6c5;
+      margin-bottom: 25px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      padding: 12px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #4ade80;
+      color: #06110a;
+      font-weight: bold;
+    }
+
+    .table-box {
+      background: #0d1b2a;
+      border-radius: 12px;
+      overflow-x: auto;
+      border: 1px solid #203247;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 850px;
+    }
+
+    th,
+    td {
+      padding: 13px;
+      text-align: left;
+      border-bottom: 1px solid #203247;
+    }
+
+    th {
+      background: #13263a;
+      color: #4ade80;
+    }
+
+    td {
+      color: #e7edf5;
+    }
+
+    .status {
+      padding: 5px 9px;
+      border-radius: 6px;
+      background: #26384b;
+      display: inline-block;
+    }
+
+    #message {
+      margin: 15px 0;
+      padding: 12px;
+      border-radius: 8px;
+      background: #13263a;
+      color: #aab6c5;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="topbar">
+    <div>
+      <h1>UMANG DIGITAL SERVICE</h1>
+      <p class="subtitle">Admin Registration Panel</p>
+    </div>
+
+    <button onclick="loadRegistrations()">🔄 Refresh</button>
+  </div>
+
+  <div id="message">Loading registrations...</div>
+
+  <div class="table-box">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Mobile</th>
+          <th>Plan</th>
+          <th>Payment UTR</th>
+          <th>Status</th>
+          <th>Created</th>
+        </tr>
+      </thead>
+
+      <tbody id="registrationTable">
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+
+  const SUPABASE_URL =
+    "https://mobpccvyaiubxclzimvo.supabase.co";
+
+  const SUPABASE_ANON_KEY =
+    "sb_publishable_Y67UU9t9soKNdUL_7I7WCg_m_3KO9Bd";
+
+  async function loadRegistrations() {
+
+    const message = document.getElementById("message");
+    const table = document.getElementById("registrationTable");
+
+    message.textContent = "Loading registrations...";
+    table.innerHTML = "";
+
+    try {
+
+      const response = await fetch(
+        `${SUPABASE_URL}/rest/v1/registrations?select=*&order=created_at.desc`,
+        {
+          method: "GET",
+          headers: {
+            "apikey": SUPABASE_ANON_KEY,
+            "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
+          }
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          `Supabase error: ${response.status}`
+        );
+      }
+
+      const data = await response.json();
+
+      if (!data.length) {
+        message.textContent = "No registrations found.";
+        return;
+      }
+
+      message.textContent =
+        `${data.length} registration(s) found.`;
+
+      data.forEach(row => {
+
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+          <td>${row.id ?? "-"}</td>
+          <td>${row.name ?? "-"}</td>
+          <td>${row.mobile ?? row.phone ?? "-"}</td>
+          <td>${row.plan ?? "-"}</td>
+          <td>${row.utr ?? row.payment_utr ?? "-"}</td>
+          <td>
+            <span class="status">
+              ${row.status ?? "Pending"}
+            </span>
+          </td>
+          <td>${row.created_at
+            ? new Date(row.created_at).toLocaleString()
+            : "-"
+          }</td>
+        `;
+
+        table.appendChild(tr);
+
+      });
+
+    } catch (error) {
+
+      console.error(error);
+
+      message.textContent =
+        "❌ " + error.message;
+
+    }
+
+  }
+
+  loadRegistrations();
+
+</script>
+
+</body>
+</html>
