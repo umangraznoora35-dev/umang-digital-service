@@ -224,11 +224,27 @@
       background: #22c55e;
     }
 
+    .btn:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
     .success {
       display: none;
       background: #10251b;
       border: 1px solid #4ade80;
       color: #bbf7d0;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .error {
+      display: none;
+      background: #3b1111;
+      border: 1px solid #ef4444;
+      color: #fecaca;
       padding: 15px;
       border-radius: 10px;
       margin-top: 20px;
@@ -287,7 +303,6 @@
     <p>Choose your plan and complete your registration.</p>
   </div>
 
-  <!-- PLAN -->
   <div class="card">
     <h2>1. Choose Your Plan</h2>
 
@@ -317,8 +332,6 @@
     <input type="hidden" id="selectedAmount">
   </div>
 
-
-  <!-- DETAILS -->
   <div class="card">
 
     <h2>2. Registration Details</h2>
@@ -326,28 +339,13 @@
     <form id="registrationForm">
 
       <label>Full Name *</label>
-      <input
-        type="text"
-        id="name"
-        placeholder="Enter your full name"
-        required
-      >
+      <input type="text" id="name" placeholder="Enter your full name" required>
 
       <label>Mobile Number *</label>
-      <input
-        type="tel"
-        id="mobile"
-        placeholder="10-digit mobile number"
-        maxlength="10"
-        required
-      >
+      <input type="tel" id="mobile" placeholder="10-digit mobile number" maxlength="10" required>
 
       <label>Email Address</label>
-      <input
-        type="email"
-        id="email"
-        placeholder="Enter your email"
-      >
+      <input type="email" id="email" placeholder="Enter your email">
 
       <label>State *</label>
       <select id="state" required>
@@ -360,24 +358,13 @@
       </select>
 
       <label>District *</label>
-      <input
-        type="text"
-        id="district"
-        placeholder="Enter your district"
-        required
-      >
+      <input type="text" id="district" placeholder="Enter your district" required>
 
       <label>Address</label>
-      <input
-        type="text"
-        id="address"
-        placeholder="Enter your address"
-      >
+      <input type="text" id="address" placeholder="Enter your address">
 
   </div>
 
-
-  <!-- PAYMENT -->
   <div class="card">
 
     <h2>3. Pay Registration Fee</h2>
@@ -390,19 +377,14 @@
       <p>Amount</p>
       <p class="amount" id="displayAmount">₹0</p>
 
-      <!-- QR CODE -->
       <div class="qr-box">
-
-        <div class="qr-title">
-          Scan & Pay with UPI
-        </div>
+        <div class="qr-title">Scan & Pay with UPI</div>
 
         <img
           id="qrCode"
           src="https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=upi%3A%2F%2Fpay%3Fpa%3D8969228403-1%40okbizaxis%26pn%3DUMANG%20DIGITAL%20SERVICE"
           alt="UPI Payment QR Code"
         >
-
       </div>
 
       <p>UPI ID</p>
@@ -427,7 +409,7 @@
 
     </div>
 
-    <button type="submit" class="btn">
+    <button type="submit" class="btn" id="submitBtn">
       Submit Registration
     </button>
 
@@ -435,8 +417,10 @@
 
     <div class="success" id="successMessage">
       ✅ Registration details received.<br><br>
-      Your application will be verified by the administrator.
+      Your application has been submitted successfully.
     </div>
+
+    <div class="error" id="errorMessage"></div>
 
   </div>
 
@@ -446,8 +430,22 @@
   © 2026 UMANG DIGITAL SERVICE. All Rights Reserved.
 </footer>
 
-
 <script>
+
+  // ==============================
+  // SUPABASE CONFIGURATION
+  // ==============================
+
+  const SUPABASE_URL =
+    "https://mobpccvyaiubxclzimvo.supabase.co";
+
+  const SUPABASE_ANON_KEY =
+    "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE";
+
+
+  // ==============================
+  // PLAN
+  // ==============================
 
   let selectedPlan = "";
   let selectedAmount = 0;
@@ -473,11 +471,6 @@
 
     element.classList.add("selected");
 
-    /*
-      UPI QR:
-      Selected plan + amount automatically QR me set hoga.
-    */
-
     const upiLink =
       "upi://pay" +
       "?pa=" + encodeURIComponent(upiId) +
@@ -494,39 +487,178 @@
   }
 
 
+  // ==============================
+  // FORM SUBMIT
+  // ==============================
+
   document
     .getElementById("registrationForm")
-    .addEventListener("submit", function(e) {
+    .addEventListener("submit", async function(e) {
 
       e.preventDefault();
+
+      const successMessage =
+        document.getElementById("successMessage");
+
+      const errorMessage =
+        document.getElementById("errorMessage");
+
+      const submitBtn =
+        document.getElementById("submitBtn");
+
+
+      successMessage.style.display = "none";
+      errorMessage.style.display = "none";
+
 
       if (!selectedPlan) {
         alert("Please select a plan first.");
         return;
       }
 
+
+      const name =
+        document.getElementById("name").value.trim();
+
       const mobile =
         document.getElementById("mobile").value.trim();
+
+      const email =
+        document.getElementById("email").value.trim();
+
+      const state =
+        document.getElementById("state").value;
+
+      const district =
+        document.getElementById("district").value.trim();
+
+      const address =
+        document.getElementById("address").value.trim();
+
+      const utr =
+        document.getElementById("utr").value.trim();
+
 
       if (!/^[0-9]{10}$/.test(mobile)) {
         alert("Please enter a valid 10-digit mobile number.");
         return;
       }
 
-      const utr =
-        document.getElementById("utr").value.trim();
 
       if (!utr) {
         alert("Please enter your payment UTR / Transaction ID.");
         return;
       }
 
-      document.getElementById("successMessage").style.display = "block";
 
-      window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: "smooth"
-      });
+      if (
+        !SUPABASE_ANON_KEY ||
+        SUPABASE_ANON_KEY.includes("PASTE_YOUR")
+      ) {
+        errorMessage.textContent =
+          "Supabase key is not configured yet. Please contact administrator.";
+
+        errorMessage.style.display = "block";
+        return;
+      }
+
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Submitting...";
+
+
+      try {
+
+        const response = await fetch(
+          SUPABASE_URL + "/rest/v1/registrations",
+          {
+            method: "POST",
+
+            headers: {
+              "Content-Type": "application/json",
+              "apikey": SUPABASE_ANON_KEY,
+              "Authorization": "Bearer " + SUPABASE_ANON_KEY,
+              "Prefer": "return=minimal"
+            },
+
+            body: JSON.stringify({
+              name: name,
+              mobile: mobile,
+              email: email || null,
+              state: state,
+              district: district,
+              address: address || null,
+              plan: selectedPlan,
+              amount: selectedAmount,
+              utr: utr,
+              status: "pending"
+            })
+          }
+        );
+
+
+        if (!response.ok) {
+
+          let errorText = "";
+
+          try {
+            const errorData = await response.json();
+            errorText =
+              errorData.message ||
+              errorData.hint ||
+              errorData.details ||
+              "Registration failed.";
+          } catch {
+            errorText = "Registration failed.";
+          }
+
+          throw new Error(errorText);
+        }
+
+
+        successMessage.innerHTML =
+          "✅ Registration submitted successfully.<br><br>" +
+          "Your payment and registration will be verified by the administrator.";
+
+        successMessage.style.display = "block";
+
+
+        document.getElementById("registrationForm").reset();
+
+        selectedPlan = "";
+        selectedAmount = 0;
+
+        document.getElementById("displayPlan").textContent =
+          "Please select a plan";
+
+        document.getElementById("displayAmount").textContent =
+          "₹0";
+
+        document.querySelectorAll(".plan").forEach(function(card) {
+          card.classList.remove("selected");
+        });
+
+
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth"
+        });
+
+      } catch (error) {
+
+        console.error(error);
+
+        errorMessage.textContent =
+          "❌ " + error.message;
+
+        errorMessage.style.display = "block";
+
+      } finally {
+
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit Registration";
+
+      }
 
     });
 
